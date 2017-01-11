@@ -39,8 +39,8 @@ def print_shop_list(shop_list):
 def create_shop_list(people_count, *order):
     # получить блюда из кулинарной книги
     dishes={}
-
     for dish in order:
+        if dish in dishes: people_count = people_count * 2 
         if dish in menu:
             dishes[dish] = menu[dish]
         else:
