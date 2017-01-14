@@ -6,7 +6,6 @@
 
 with open('recipe.txt', encoding='utf-8') as document:
     menu={}
-    global menu
     for line in document:
         dish = line.strip()
         number_of_products = int(document.readline().strip())
@@ -40,7 +39,7 @@ def create_shop_list(people_count, *order):
     # получить блюда из кулинарной книги
     dishes={}
     for dish in order:
-        if dish in dishes: people_count = people_count * 2 
+        if dish in dishes: people_count = people_count + 1
         if dish in menu:
             dishes[dish] = menu[dish]
         else:
