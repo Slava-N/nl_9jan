@@ -24,7 +24,7 @@ def get_shop_list_by_dishes(dishes, people_count):
         for ingridient in dishes[dish]:
             new_shop_item = dict(ingridient)
             # пересчитали ингрединты по количеству людей
-            new_shop_item['quantity'] = new_shop_item['quantity'] * people_count
+            new_shop_item['quantity'] = new_shop_item['quantity'] * people_count[dish]
             if new_shop_item['product'] not in shop_list:
                 shop_list[new_shop_item['product']] = new_shop_item
             else:
@@ -37,16 +37,19 @@ def print_shop_list(shop_list):
 
 def create_shop_list(people_count, *order):
     # получить блюда из кулинарной книги
-    dishes={}
+    dishes = {}
+    people_count_dishes = {}
     for dish in order:
-        if dish in dishes: people_count = people_count + 1
-        if dish in menu:
-            dishes[dish] = menu[dish]
+        if dish in dishes: people_count_dishes[dish] = people_count_dishes[dish] + people_count
         else:
-            print('Блюдо "{}" закончилось'.format(dish))
-    print('Мы приготовим Вам: {}'.format(list(dishes.keys()), sep='\n'))
+            if dish in menu:
+                dishes[dish] = menu[dish]
+                people_count_dishes[dish] = people_count
+            else:
+                print('Блюдо "{}" закончилось'.format(dish))
+    print('Мы приготовим Вам: {0}'.format(people_count_dishes), sep='\n')
     #заполнили список покупок
-    shop_list = get_shop_list_by_dishes(dishes, people_count)
+    shop_list = get_shop_list_by_dishes(dishes, people_count_dishes)
     # Вывести список покупок
     print('Список покупок: ')
     print_shop_list(shop_list)
